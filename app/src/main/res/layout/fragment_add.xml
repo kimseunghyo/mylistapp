@@ -11,42 +11,98 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingLeft="40dp"
+        android:paddingTop="20dp"
+        android:paddingRight="40dp">
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp" >
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/productTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="이름" />
+                android:background="#fff"
+                android:hint="이름"
+                android:inputType="textMultiLine"
+                android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <ImageView
             android:id="@+id/productImg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_launcher_background" />
+            android:layout_marginBottom="15dp"
+            android:maxWidth="325dp"
+            android:maxHeight="200dp"
+            android:minWidth="325dp"
+            android:minHeight="200dp"
+            android:src="@drawable/baseline_insert_photo_24"
+            android:scaleType="centerCrop" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/priceTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#fff"
+                    android:hint="가격"
+                    android:inputType="number|textMultiLine"
+                    android:maxLines="1"
+                    android:minWidth="260dp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:paddingLeft="7dp">
+
+                <RadioButton
+                    android:id="@+id/enBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="엔" />
+
+                <RadioButton
+                    android:id="@+id/wonBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="원" />
+            </RadioGroup>
+
+        </LinearLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp" >
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/linkTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="가격" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="링크" />
+                android:background="#fff"
+                android:hint="링크"
+                android:inputType="textMultiLine"
+                android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -54,16 +110,23 @@
             android:layout_height="match_parent">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etcTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="기타" />
+                android:background="#fff"
+                android:hint="기타"
+                android:inputType="textMultiLine"
+                android:maxLines="3" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
     <Button
         android:id="@+id/addBtn"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="30dp"
+        android:backgroundTint="#2A45F1"
+        android:text="추가" />
 
 </LinearLayout>
