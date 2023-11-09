@@ -1,10 +1,8 @@
-package com.example.mylistapp.ui.add;
+package com.example.mylistapp.ui.productAdd;
 
 import static android.app.Activity.RESULT_OK;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -13,7 +11,6 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.GenericLifecycleObserver;
 
 import android.provider.MediaStore;
 import android.text.Editable;
@@ -27,15 +24,14 @@ import android.widget.ImageView;
 import com.example.mylistapp.R;
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.io.InputStream;
 import java.text.DecimalFormat;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link AddFragment#newInstance} factory method to
+ * Use the {@link ProductAddFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class AddFragment extends Fragment implements View.OnClickListener {
+public class ProductAddFragment extends Fragment implements View.OnClickListener {
     private TextInputEditText productTxt;
     private ImageView productImg;
     private TextInputEditText priceTxt;
@@ -55,7 +51,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
     private String mParam1;
     private String mParam2;
 
-    public AddFragment() {
+    public ProductAddFragment() {
         // Required empty public constructor
     }
 
@@ -68,8 +64,8 @@ public class AddFragment extends Fragment implements View.OnClickListener {
      * @return A new instance of fragment AddFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static AddFragment newInstance(String param1, String param2) {
-        AddFragment fragment = new AddFragment();
+    public static ProductAddFragment newInstance(String param1, String param2) {
+        ProductAddFragment fragment = new ProductAddFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -90,7 +86,7 @@ public class AddFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_add, container, false);
+        View view = inflater.inflate(R.layout.fragment_product_add, container, false);
 
         productTxt = (TextInputEditText) view.findViewById(R.id.productTxt);
         productImg = (ImageView) view.findViewById(R.id.productImg);
@@ -124,11 +120,17 @@ public class AddFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        // 핸드폰 갤러리에 있는 사진 가져오게 하기
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-        intent.setAction(Intent.ACTION_PICK);
-        activityResultLauncher.launch(intent);
+        if (v.getId() == R.id.productImg) {
+            // 핸드폰 갤러리에 있는 사진 가져오게 하기
+            Intent intent = new Intent(Intent.ACTION_PICK);
+            intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+            intent.setAction(Intent.ACTION_PICK);
+            activityResultLauncher.launch(intent);
+        }
+
+        if (v.getId() == R.id.addBtn) {
+            // 버튼 누르면 데이터베이스에 insert
+        }
     }
 
     private class TxtWatcher implements TextWatcher {
