@@ -69,7 +69,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public void insertItem(String item) { // 중복으로 값이 들어올 경우 에러처리 시키기
         SQLiteDatabase db = getWritableDatabase();
-        String sql = "INSERT INTO list (item, checked) VALUES('" + item + "', '" + false + "');";
+        String sql = "INSERT INTO list (item, checked) VALUES('" + item + "', false);";
         db.execSQL(sql);
 
 //        ContentValues values = new ContentValues();
