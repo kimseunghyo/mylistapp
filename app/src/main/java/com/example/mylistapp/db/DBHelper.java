@@ -10,84 +10,97 @@ import android.database.sqlite.SQLiteTableLockedException;
 import android.util.Log;
 
 public class DBHelper extends SQLiteOpenHelper {
+    private SQLiteDatabase db;
+
     public DBHelper(Context context) {
         super(context, "myListDB", null, 1);
+
+        db = getWritableDatabase();
+        db.execSQL("PRAGMA foreign_keys=ON;");
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sql = "CREATE TABLE list("
+        String listSql = "CREATE TABLE list("
                 + "id INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + "item VARCHAR NOT NULL UNIQUE,"
                 + "checked BOOLEAN)";
 
-        db.execSQL(sql);
-        db.close();
+        String productSql = "CREATE TABLE product("
+                + "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + "name VARCHAR NOT NULL,"
+                + "image VARCHAR,"
+                + "price INTEGER NOT NULL,"
+                + "price_unit VARCHAR NOT NULL,"
+                + "link VARCHAR NOT NULL,"
+                + "etc VARCHAR,"
+                + "list_id INTEGER,"
+                + "FOREIGN KEY(list_id) REFERENCES list(id) ON DELETE CASCADE);";
+
+        db.execSQL(listSql);
+        db.execSQL(productSql);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE if exists list");
         onCreate(db);
-        db.close();
     }
 
     public Cursor getItemList() {
-        SQLiteDatabase db = getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM list WHERE checked = false;", null);
-
-        return cursor;
+        return db.rawQuery("SELECT * FROM list WHERE checked = false;", null);
     }
 
     public Cursor getSearchItemList(String word) {
-        SQLiteDatabase db = getWritableDatabase();   // v포함
-        Cursor cursor = db.rawQuery("SELECT * FROM list WHERE item like '%" + word + "%';", null);
-
-        return cursor;
+        return db.rawQuery("SELECT * FROM list WHERE item like '%" + word + "%';", null);
     }
 
     public Cursor getCheckedItemList() {
-        SQLiteDatabase db = getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM list WHERE checked = true;", null);
-
-        return cursor;
+        return db.rawQuery("SELECT * FROM list WHERE checked = true;", null);
     }
 
-    public Cursor getProductList() {
-        SQLiteDatabase db = getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM product WHERE id = '';", null);
-
-        return cursor;
+    public Cursor getProductList(int listId) {
+        return db.rawQuery("SELECT * FROM product WHERE list_id = " + listId + ";", null);
     }
 
-    public Cursor getProductView() {
-        SQLiteDatabase db = getWritableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM product WHERE id = '';", null);
-
-        return cursor;
+    public Cursor getProductView(int id) {
+        return db.rawQuery("SELECT * FROM product WHERE id = " + id + ";", null);
     }
 
-    public void insertItem(String item) { // 중복으로 값이 들어올 경우 에러처리 시키기
-        SQLiteDatabase db = getWritableDatabase();
-        String sql = "INSERT INTO list (item, checked) VALUES('" + item + "', false);";
-        db.execSQL(sql);
+    public void insertItem(String item) {
+        ContentValues values = new ContentValues();
+        values.put("item", item);
+        values.put("checked", false);
 
-//        ContentValues values = new ContentValues();
-//        values.put("item", item);
-//
-//        long result = db.insert("list", null, values);
-//
-//        if (result == -1) {
-//            Log.println(Log.ASSERT, "t", "Data not inserted");
-//        } else {
-//            Log.println(Log.ASSERT, "t", "Data inserted");
-//        }
+        long result = db.insert("list", null, values);
 
-        db.close();
+        if (result == -1) {
+            Log.println(Log.ASSERT, "t", "Data not inserted");
+        } else {
+            Log.println(Log.ASSERT, "t", "Data inserted");
+        }
+    }
+
+    public void insertProduct(String name, String image, int price, String priceUnit, String link, String etc, int listId) {
+        ContentValues values = new ContentValues();
+        values.put("name", name);
+        values.put("image", image);
+        values.put("price", price);
+        values.put("price_unit", priceUnit);
+        values.put("link", link);
+        values.put("etc", etc);
+        values.put("list_id", listId);
+
+        long result = db.insert("product", null, values);
+
+        if (result == -1) {
+            Log.println(Log.ASSERT, "t", "Data not inserted");
+        } else {
+            Log.println(Log.ASSERT, "t", "Data inserted");
+        }
     }
 
     public void updateItemCheck(int id) {
-        SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM list WHERE id = " + id + ";", null);
         boolean isChecked;
 
@@ -104,5 +117,11 @@ public class DBHelper extends SQLiteOpenHelper {
             db.execSQL(sql);
         }
         cursor.close();
+    }
+
+    public void closeDB() {
+        if (db != null && db.isOpen()) {
+            db.close();
+        }
     }
 }

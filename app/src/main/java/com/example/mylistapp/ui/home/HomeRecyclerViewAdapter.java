@@ -2,6 +2,7 @@ package com.example.mylistapp.ui.home;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.animation.ObjectAnimator;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,7 +22,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
     private OnItemClickListener onItemClickListener = null;
 
     public interface OnItemClickListener {
-        void onItemClick(int id, String action);
+        void onItemClick(int id, String item, String action);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -53,7 +54,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final TextView itemTxt;
+        public TextView itemTxt;
         public ImageButton checkedBtn;
 
         public ViewHolder(FragmentHomeBinding binding) {
@@ -66,10 +67,11 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
                 public void onClick(View v) {
                     int pos = getBindingAdapterPosition();
                     int id = listData.get(pos).getId();
+                    String item = listData.get(pos).getItem();
 
                     if (id != RecyclerView.NO_POSITION) {
                         if (onItemClickListener != null) {
-                            onItemClickListener.onItemClick(id, "select");
+                            onItemClickListener.onItemClick(id, item, "select");
                         }
                     }
                 }
@@ -80,10 +82,11 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
                 public void onClick(View v) {
                     int pos = getBindingAdapterPosition();
                     int id = listData.get(pos).getId();
+                    String item = listData.get(pos).getItem();
 
                     if (id != RecyclerView.NO_POSITION) {
                         if (onItemClickListener != null) {
-                            onItemClickListener.onItemClick(id, "check");
+                            onItemClickListener.onItemClick(id, item, "check");
                         }
                     }
                 }

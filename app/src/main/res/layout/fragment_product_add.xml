@@ -24,6 +24,14 @@
                 android:background="#fff"
                 android:src="@drawable/baseline_arrow_back_24" />
 
+            <TextView
+                android:id="@+id/listItemTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="listItem"
+                android:layout_gravity="center_horizontal"
+                android:textColor="#000"/>
+
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -44,7 +52,7 @@
             android:layout_marginBottom="15dp" >
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/productTxt"
+                android:id="@+id/nameTxt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#fff"
@@ -54,7 +62,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <ImageView
-            android:id="@+id/productImg"
+            android:id="@+id/prodImg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
@@ -88,6 +96,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <RadioGroup
+                android:id="@+id/priceBtnGroup"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
@@ -95,10 +104,11 @@
                 android:paddingLeft="7dp">
 
                 <RadioButton
-                    android:id="@+id/enBtn"
+                    android:id="@+id/yenBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:checked="true"
                     android:text="엔" />
 
                 <RadioButton

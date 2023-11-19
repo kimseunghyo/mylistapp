@@ -51,7 +51,7 @@ public class CheckedRecyclerViewAdapter extends RecyclerView.Adapter<CheckedRecy
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public final TextView itemTxt;
+        public TextView itemTxt;
         public ImageButton checkedBtn;
 
         public ViewHolder(FragmentCheckedBinding binding) {

@@ -3,26 +3,41 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:id="@+id/prodLayout" >
 
     <TextView
-        android:id="@+id/itemTxt"
+        android:id="@+id/nameTxt"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/text_margin"
-        android:layout_weight="5"
+        android:text="name"
         android:textAppearance="?attr/textAppearanceListItem"
-        android:text="test"
         android:textSize="20sp" />
 
-    <ImageButton
-        android:id="@+id/checkedBtn"
+    <ImageView
+        android:id="@+id/prodImg"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:minWidth="100dp"
+        android:minHeight="100dp"
+        android:src="@drawable/baseline_insert_photo_24" />
+
+    <TextView
+        android:id="@+id/priceTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_weight="1"
-        android:backgroundTint="#fff"
-        android:src="@drawable/baseline_check_24"
-        android:visibility="invisible"
-        app:tint="#53EA41" />
+        android:text="price" />
+
+    <TextView
+        android:id="@+id/etcTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_weight="1"
+        android:text="etc" />
 
 </LinearLayout>

@@ -21,6 +21,7 @@ import com.example.mylistapp.db.DBHelper;
 import com.example.mylistapp.dto.ItemDto;
 import com.example.mylistapp.ui.home.HomeFragment;
 import com.example.mylistapp.ui.home.HomeRecyclerViewAdapter;
+import com.example.mylistapp.ui.search.SearchFragment;
 
 /**
  * A fragment representing a list of Items.
@@ -40,6 +41,8 @@ public class CheckedFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        requireActivity().invalidateOptionsMenu();
     }
 
     @Override
@@ -47,7 +50,8 @@ public class CheckedFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_checked_list, container, false);
         Context context = view.getContext();
-        dbHelper = new DBHelper(getActivity().getApplicationContext());
+
+        dbHelper = new DBHelper(context);
         recyclerView = view.findViewById(R.id.itemList);
 
         adapter = new CheckedRecyclerViewAdapter();
@@ -61,10 +65,16 @@ public class CheckedFragment extends Fragment {
                     dbHelper.updateItemCheck(id);
                     getItems(adapter);
 
-                    Fragment fragment = requireActivity().getSupportFragmentManager().findFragmentByTag("Home");
-                    if (fragment instanceof HomeFragment) {
-                        HomeFragment homeFragment = (HomeFragment) fragment;
+                    Fragment fragment01 = requireActivity().getSupportFragmentManager().findFragmentByTag("Home");
+                    if (fragment01 instanceof HomeFragment) {
+                        HomeFragment homeFragment = (HomeFragment) fragment01;
                         homeFragment.refresh();
+                    }
+
+                    Fragment fragment02 = requireActivity().getSupportFragmentManager().findFragmentByTag("Search");
+                    if (fragment02 instanceof SearchFragment) {
+                        SearchFragment searchFragment = (SearchFragment) fragment02;
+                        searchFragment.refresh();
                     }
                 }
             }
@@ -94,9 +104,8 @@ public class CheckedFragment extends Fragment {
                 }
                 adapter.addItem(itemDto);
             }
-
+            cursor.close();
             adapter.notifyDataSetChanged();
-            dbHelper.close();
         }
         catch (Exception e) {
             Log.d(TAG, "DB Error");
@@ -105,5 +114,13 @@ public class CheckedFragment extends Fragment {
 
     public void refresh() {
         getItems(adapter);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (dbHelper != null) {
+            dbHelper.closeDB();
+        }
     }
 }

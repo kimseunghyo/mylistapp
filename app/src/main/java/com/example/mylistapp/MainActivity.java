@@ -43,12 +43,12 @@ public class MainActivity extends AppCompatActivity {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
                 Fragment currentFragment = fragmentManager.getPrimaryNavigationFragment();
+                //Fragment currentFragment = fragmentManager.findFragmentById(R.id.mainFrame);
                 if (currentFragment != null) {
                     fragmentTransaction.hide(currentFragment);
                 }
 
                 fragment = fragmentManager.findFragmentByTag(tag);
-                Log.println(Log.ASSERT, "t", tag);
 
                 if (fragment == null) {
                     if (item.getItemId() == R.id.home) {

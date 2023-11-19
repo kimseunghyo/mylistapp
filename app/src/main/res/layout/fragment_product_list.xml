@@ -24,6 +24,14 @@
                 android:background="#fff"
                 android:src="@drawable/baseline_arrow_back_24" />
 
+            <TextView
+                android:id="@+id/listItemTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="listItem"
+                android:layout_gravity="center_horizontal"
+                android:textColor="#000"/>
+
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -31,18 +39,20 @@
     <androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/productList"
+        android:id="@+id/prodList"
         android:name="com.example.mylistapp.ui.product.ProductFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="56dp"
         android:layout_marginRight="16dp"
-        app:layoutManager="LinearLayoutManager"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="2"
         tools:context=".ui.home.ProductFragment"
         tools:listitem="@layout/fragment_product" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addFloBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
@@ -50,7 +60,7 @@
         android:src="@drawable/baseline_add_24"
         app:backgroundTint="#2A45F1"
         app:tint="#fff"
-        app:layout_anchor="@id/productList"
+        app:layout_anchor="@id/prodList"
         app:layout_anchorGravity="bottom|right|end" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
